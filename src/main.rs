@@ -7,7 +7,10 @@ use std::time::Instant;
 mod prelude {
     pub use crate::Solution;
     pub use nom::{
-        character::complete::i64, character::complete::newline, multi::many0, sequence::terminated,
+        character::complete::i64,
+        character::complete::{multispace0, newline},
+        multi::many0,
+        sequence::terminated,
         Finish, IResult,
     };
     pub use std::collections::HashMap;
