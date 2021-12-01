@@ -1,10 +1,16 @@
 use std::env;
 use std::fs::File;
 use std::io::Write;
+use std::path::Path;
 
 fn main() -> std::io::Result<()> {
     let args: Vec<String> = env::args().collect();
     let day: u32 = u32::from_str_radix(&args[1], 10).expect("Expected a day number (1-25)");
+
+    if Path::new(&format!("./src/day{:02}.rs", day)).exists() {
+        println!("Day {} already exists", day);
+        return Ok(());
+    }
 
     let _file = File::create(format!("./inputs/day{:02}.txt", day))?;
 
