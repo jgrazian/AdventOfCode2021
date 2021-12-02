@@ -21,20 +21,20 @@ fn main() -> std::io::Result<()> {
 
 pub struct Day{day_name:02} {{}}
 
-impl Day{day_name:02} {{
-    pub fn new() -> Self {{
-        Self {{}}
-    }}
-}}
+impl Day{day_name:02} {{}}
+
+fn parse(input: &str) {{}}
 
 impl Solution for Day{day_name:02} {{
-    fn parse(&mut self, input: &str) {{}}
+    fn part1(&self, input: &str) -> Box<dyn ToString> {{
+        let parsed = map_lines(input, parse);
 
-    fn part1(&self) -> Box<dyn ToString> {{
         Box::new(0)
     }}
 
-    fn part2(&self) -> Box<dyn ToString> {{
+    fn part2(&self, input: &str) -> Box<dyn ToString> {{
+        let parsed = map_lines(input, parse);
+
         Box::new(0)
     }}
 }}
@@ -43,18 +43,21 @@ impl Solution for Day{day_name:02} {{
 mod tests {{
     use super::*;
 
+    const INPUT: &str = "";
+
+    const PART1: &str = "";
+    const PART2: &str = "";
+
     #[test]
     fn test_part1() {{
-        let mut day = Day{day_name:02}::new();
-        day.parse("");
-        assert_eq!(day.part1().to_string(), "");
+        let day = Day{day_name:02} {{}};
+        assert_eq!(day.part1(INPUT).to_string(), PART1);
     }}
 
     #[test]
     fn test_part2() {{
-        let mut day = Day{day_name:02}::new();
-        day.parse("");
-        assert_eq!(day.part2().to_string(), "");
+        let day = Day{day_name:02} {{}};
+        assert_eq!(day.part2(INPUT).to_string(), PART2);
     }}
 }}"#,
             day_name = day
