@@ -24,7 +24,7 @@ impl Solution for Day03 {
     fn part1(&self, input: &str) -> Box<dyn ToString> {
         let parsed = map_lines(input, parse_binary);
 
-        let mut gamma = parsed[0].iter().map(|v| 0).collect::<Vec<_>>();
+        let mut gamma = parsed[0].iter().map(|_| 0).collect::<Vec<_>>();
 
         for line in &parsed {
             for (i, bit) in line.iter().enumerate() {
