@@ -1,5 +1,8 @@
-pub fn map_lines<O>(input: &str, parser: impl Fn(&str) -> O) -> Vec<O> {
-    input.lines().map(|i| parser(i)).collect::<Vec<_>>()
+pub fn map_lines<'a, O>(
+    input: &'a str,
+    parser: impl Fn(&'a str) -> O + 'a,
+) -> impl Iterator<Item = O> + 'a {
+    input.lines().map(move |i| parser(i))
 }
 
 pub fn parse_i64(input: &str) -> i64 {

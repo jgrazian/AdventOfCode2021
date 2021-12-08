@@ -22,7 +22,7 @@ fn direction_parser(input: &str) -> Direction {
 
 impl Solution for Day02 {
     fn part1(&self, input: &str) -> Box<dyn ToString> {
-        let parsed = map_lines(input, direction_parser);
+        let parsed = map_lines(input, direction_parser).collect::<Vec<_>>();
 
         let mut hor = 0;
         let mut vert = 0;
@@ -37,7 +37,7 @@ impl Solution for Day02 {
     }
 
     fn part2(&self, input: &str) -> Box<dyn ToString> {
-        let parsed = map_lines(input, direction_parser);
+        let parsed = map_lines(input, direction_parser).collect::<Vec<_>>();
 
         let mut aim = 0;
         let mut hor = 0;

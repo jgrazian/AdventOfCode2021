@@ -6,7 +6,7 @@ impl Day01 {}
 
 impl Solution for Day01 {
     fn part1(&self, input: &str) -> Box<dyn ToString> {
-        let parsed = map_lines(input, parse_i64);
+        let parsed = map_lines(input, parse_i64).collect::<Vec<_>>();
 
         let num_increase = parsed
             .iter()
@@ -18,7 +18,7 @@ impl Solution for Day01 {
     }
 
     fn part2(&self, input: &str) -> Box<dyn ToString> {
-        let parsed = map_lines(input, parse_i64);
+        let parsed = map_lines(input, parse_i64).collect::<Vec<_>>();
 
         let window_sums = parsed.windows(3).map(|w| w.iter().sum::<i64>());
 

@@ -22,7 +22,7 @@ fn to_decimal(input: &[u32]) -> i64 {
 
 impl Solution for Day03 {
     fn part1(&self, input: &str) -> Box<dyn ToString> {
-        let parsed = map_lines(input, parse_binary);
+        let parsed = map_lines(input, parse_binary).collect::<Vec<_>>();
 
         let mut gamma = parsed[0].iter().map(|_| 0).collect::<Vec<_>>();
 
@@ -53,7 +53,7 @@ impl Solution for Day03 {
     }
 
     fn part2(&self, input: &str) -> Box<dyn ToString> {
-        let parsed = map_lines(input, parse_binary);
+        let parsed = map_lines(input, parse_binary).collect::<Vec<_>>();
 
         let mut oxy = parsed
             .iter()
