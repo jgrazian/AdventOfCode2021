@@ -14,6 +14,7 @@ mod day11;
 mod day12;
 mod day13;
 mod day14;
+mod day15;
 
 use std::env;
 use std::fs;
@@ -67,6 +68,7 @@ fn get_solution(day: u32) -> Box<dyn Solution> {
         12 => Box::new(day12::Day12 {}),
         13 => Box::new(day13::Day13 {}),
         14 => Box::new(day14::Day14 {}),
+        15 => Box::new(day15::Day15 {}),
         _ => panic!("Expected day number between (1-25)."),
     }
 }
