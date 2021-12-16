@@ -1,5 +1,3 @@
-use std::hash::Hash;
-
 use crate::prelude::*;
 
 pub struct Day15 {}
