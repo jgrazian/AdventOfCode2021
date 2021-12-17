@@ -36,14 +36,15 @@ fn _print_bits(bits: &[bool]) {
 
 #[derive(Debug, PartialEq)]
 struct Packet {
-    version: u64,
-    id: u64,
+    version: u8,
+    id: u8,
     contents: PacketType,
 }
+
 #[derive(Debug, PartialEq)]
 enum PacketType {
     Literal(u64),
-    Operator(bool, Vec<Packet>),
+    Operator(Vec<Packet>),
 }
 
 impl Packet {
@@ -52,8 +53,8 @@ impl Packet {
             return (bits, None);
         }
 
-        let version = bits_to_u64(&bits[0..3]);
-        let id = bits_to_u64(&bits[3..6]);
+        let version = bits_to_u64(&bits[0..3]) as u8;
+        let id = bits_to_u64(&bits[3..6]) as u8;
 
         let (remain, contents) = if id == 4 {
             let mut value_bits = Vec::new();
@@ -95,7 +96,7 @@ impl Packet {
                 (to_parse, sub_contents)
             };
 
-            (rem, PacketType::Operator(*op_flag, sub_contents))
+            (rem, PacketType::Operator(sub_contents))
         };
 
         (
@@ -123,7 +124,7 @@ impl Solution for Day16 {
         fn get_version_sum(packet: &Packet) -> i64 {
             let mut sum = packet.version as i64;
             match &packet.contents {
-                PacketType::Operator(_, children) => {
+                PacketType::Operator(children) => {
                     children.iter().for_each(|c| sum += get_version_sum(c))
                 }
                 _ => (),
@@ -141,7 +142,7 @@ impl Solution for Day16 {
         fn get_value(packet: &Packet) -> u64 {
             match (packet.id, &packet.contents) {
                 (_, PacketType::Literal(v)) => *v,
-                (id, PacketType::Operator(_, sub_packets)) => {
+                (id, PacketType::Operator(sub_packets)) => {
                     let mut values = sub_packets.iter().map(|p| get_value(p));
                     match id {
                         0 => values.sum(),
@@ -208,21 +209,18 @@ mod tests {
             Packet {
                 version: 1,
                 id: 6,
-                contents: PacketType::Operator(
-                    false,
-                    vec![
-                        Packet {
-                            version: 6,
-                            id: 4,
-                            contents: PacketType::Literal(10)
-                        },
-                        Packet {
-                            version: 2,
-                            id: 4,
-                            contents: PacketType::Literal(20)
-                        }
-                    ]
-                )
+                contents: PacketType::Operator(vec![
+                    Packet {
+                        version: 6,
+                        id: 4,
+                        contents: PacketType::Literal(10)
+                    },
+                    Packet {
+                        version: 2,
+                        id: 4,
+                        contents: PacketType::Literal(20)
+                    }
+                ])
             }
         );
     }
@@ -237,26 +235,23 @@ mod tests {
             Packet {
                 version: 7,
                 id: 3,
-                contents: PacketType::Operator(
-                    true,
-                    vec![
-                        Packet {
-                            version: 2,
-                            id: 4,
-                            contents: PacketType::Literal(1)
-                        },
-                        Packet {
-                            version: 4,
-                            id: 4,
-                            contents: PacketType::Literal(2)
-                        },
-                        Packet {
-                            version: 1,
-                            id: 4,
-                            contents: PacketType::Literal(3)
-                        }
-                    ]
-                )
+                contents: PacketType::Operator(vec![
+                    Packet {
+                        version: 2,
+                        id: 4,
+                        contents: PacketType::Literal(1)
+                    },
+                    Packet {
+                        version: 4,
+                        id: 4,
+                        contents: PacketType::Literal(2)
+                    },
+                    Packet {
+                        version: 1,
+                        id: 4,
+                        contents: PacketType::Literal(3)
+                    }
+                ])
             }
         );
     }
