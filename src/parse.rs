@@ -6,5 +6,5 @@ pub fn map_lines<'a, O>(
 }
 
 pub fn parse_i64(input: &str) -> i64 {
-    i64::from_str_radix(input, 10).expect("Unable to parse i64.")
+    i64::from_str_radix(input.trim(), 10).expect("Unable to parse i64.")
 }

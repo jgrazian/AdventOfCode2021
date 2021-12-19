@@ -145,23 +145,10 @@ mod tests {
     fold along x=5";
 
     const PART1: &str = "17";
-    const PART2: &str = "#####
-    #...#
-    #...#
-    #...#
-    #####
-    .....
-    .....";
 
     #[test]
     fn test_part1() {
         let day = Day13 {};
         assert_eq!(day.part1(INPUT).to_string(), PART1);
-    }
-
-    #[test]
-    fn test_part2() {
-        let day = Day13 {};
-        assert_eq!(day.part2(INPUT).to_string(), PART2);
     }
 }
