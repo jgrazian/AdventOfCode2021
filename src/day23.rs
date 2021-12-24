@@ -38,6 +38,7 @@ impl Bug {
         }
     }
 
+    #[allow(dead_code)]
     fn to_char(&self) -> char {
         match self {
             Self::A => 'A',
@@ -398,6 +399,7 @@ fn try_move_out_room_part2(
         .filter_map(|v| v)
 }
 
+#[allow(dead_code)]
 fn part2_from_shorthand(input: &str) -> [Option<Bug>; 27] {
     let mut out = [None; 27];
     let mut i = 0;
@@ -415,6 +417,7 @@ fn part2_from_shorthand(input: &str) -> [Option<Bug>; 27] {
     out
 }
 
+#[allow(dead_code)]
 fn print_part2(map: &[Option<Bug>; 27]) {
     print!(
         "
