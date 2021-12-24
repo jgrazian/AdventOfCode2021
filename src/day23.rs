@@ -323,7 +323,7 @@ fn try_move_to_room_part2(
                         out[hall] = None;
                         out[target[0]] = Some(bug);
                         Some((out, bug.cost() * (h0 - hall + 1) as u32))
-                    } else if bug.h0() < hall && (h0 - 1..hall).all(|h| map[h] == None) {
+                    } else if bug.h0() < hall && (h0..hall).all(|h| map[h] == None) {
                         let mut out = map.clone();
                         out[hall] = None;
                         out[target[0]] = Some(bug);
@@ -516,66 +516,12 @@ impl Solution for Day23 {
             }
         }
 
-        let states = [
-            "...........BCBDDCBADBACADCA",
-            "..........DBCB.DCBADBACADCA",
-            "A.........DBCB.DCB.DBACADCA",
-            "A........BDBC..DCB.DBACADCA",
-            "A......B.BDBC..DC..DBACADCA",
-            "AA.....B.BDBC..DC..DB.CADCA",
-            "AA.....B.BDB...DC..DBCCADCA",
-            "AA.....B.BDB...D.C.DBCCADCA",
-            "AA...B.B.BDB...D.C.D.CCADCA",
-            "AA.D.B.B.BDB...D.C.D.CCA.CA",
-            "AA.D...B.BDB...D.C.D.CCABCA",
-            "AA.D.....BDB...D.C.DBCCABCA",
-        ];
-
-        let mut prev = part2_from_shorthand(states[0]);
-        for s in states.map(|s| part2_from_shorthand(s)) {
-            if best_states.get(&s) == None {
-                println!("Can't find:");
-                print_part2(&s);
-                break;
-            }
-            prev = s;
-        }
-
-        println!("Starting with:");
-        print_part2(&prev);
-        for (next_state, next_cost) in try_move_down_part2(&prev)
-            .chain(try_move_up_part2(&prev))
-            .chain(try_move_to_room_part2(&prev))
-            .chain(try_move_out_room_part2(&prev))
-        {
-            print_part2(&next_state);
-        }
-
         let solved = "#A#B#C#D#
         #A#B#C#D#
         #A#B#C#D#
         #A#B#C#D#";
         let finished_state = parse_part2(solved);
         let best = *best_states.get(&finished_state).unwrap();
-
-        let mut _search = finished_state.clone();
-        _search[10] = Some(Bug::D);
-        _search[14] = None;
-        let (c, s) = best_states.get(&_search).unwrap();
-        println!("Cost:{}", c);
-        print_part2(&s);
-
-        // debug
-        let mut path = vec![(best.0, finished_state)];
-        while let Some((c, s)) = best_states.get(&(path.last().unwrap()).1) {
-            path.push((*c, *s));
-            if s == &map {
-                break;
-            }
-        }
-        path.iter().rev().for_each(|p| {
-            //print_part2(&p.1);
-        });
 
         Box::new(best.0)
     }
@@ -933,6 +879,19 @@ mod tests {
         map[15] = Some(Bug::B);
         map[12] = Some(Bug::C);
         assert_eq!(try_move_out_room_part2(&map).count(), 14);
+    }
+
+    #[test]
+    fn part2_debug() {
+        let map = part2_from_shorthand("AA.D.B.B.BDB...D.C.D.CCA.CA");
+        print_part2(&map);
+        try_move_to_room_part2(&map).for_each(|t| print_part2(&t.0));
+        let out = part2_from_shorthand("AA.D...B.BDBB..D.C.D.CCA.CA");
+        print_part2(&out);
+        assert_eq!(
+            try_move_to_room_part2(&map).next(),
+            Some((out, Bug::B.cost() * 2))
+        );
     }
 
     #[test]
